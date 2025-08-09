@@ -10,7 +10,7 @@ body {
 .terminal-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   background-color: #000000;
 }
 
@@ -18,6 +18,7 @@ body {
 .page-header {
   padding: 20px 30px 0 30px;
   color: #238723;
+  flex-shrink: 0;
 }
 
 .main-heading {
@@ -35,14 +36,14 @@ body {
 /* MAIN TERMINAL AREA */
 .main-terminal {
   display: flex;
-  flex-grow: 1;
-  height: calc(100vh - 130px);
+  flex: 1;
   border-top: 2px solid #238723;
   border-bottom: 2px solid #238723;
+  min-height: 0; /* Prevent flex overflow */
 }
 
 .left-panel {
-  width: 25%;
+  flex: 0 0 auto; /* take only needed width */
   padding: 20px;
   border-right: 2px solid #238723;
   display: flex;
@@ -56,8 +57,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: #000000;
-  box-shadow: none;
-  position: relative;
+  overflow: hidden; /* Prevent body scroll */
 }
 
 /* Command List Header */
@@ -92,8 +92,8 @@ body {
 
 /* Chat Terminal */
 .chat-box {
-  flex-grow: 1;
-  overflow-y: auto;
+  flex: 1;
+  overflow-y: auto; /* Only right container scrolls */
   padding: 0 30px 20px 30px;
   scrollbar-width: none;
 }
@@ -108,7 +108,6 @@ body {
   gap: 10px;
   white-space: pre-wrap;
   word-break: break-word;
-  flex: 1;
 }
 
 .line {
@@ -165,6 +164,35 @@ body {
   border-top: 2px solid #238723;
   background-color: #010101;
   box-shadow: inset 0 2px 4px rgba(0, 255, 0, 0.2);
+  flex-shrink: 0;
+}
+
+/* Card Styles */
+.card-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-image {
+  width: 260px;
+  height: 360px;
+  border-radius: 16px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 6px 2px rgba(128, 128, 128, 0.3);
+}
+
+.avatar-image.hovered {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px 4px rgba(128, 128, 128, 0.4);
+}
+
+.avatar-image.clicked {
+  transform: scale(0.95);
 }
 
 /* Responsive */
@@ -177,6 +205,8 @@ body {
   .right-terminal {
     width: 100%;
     padding: 20px;
+    border-right: none;
+    border-bottom: 2px solid #238723;
   }
 
   .command-list {
@@ -194,5 +224,25 @@ body {
 
   .sub-heading {
     font-size: 16px;
+  }
+
+  .avatar-image {
+    width: 200px;
+    height: 280px;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatar-image {
+    width: 160px;
+    height: 220px;
+  }
+
+  .main-heading {
+    font-size: 20px;
+  }
+
+  .sub-heading {
+    font-size: 14px;
   }
 }
